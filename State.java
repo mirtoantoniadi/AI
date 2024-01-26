@@ -33,5 +33,21 @@ public class State implements Comparable<State>
 	this.lampOnRight = s.lampOnRight;
 	this.initialTimes=s.initialTimes;
 	}
+
+	public List<Integer> getRightList() {
+        return new ArrayList<>(RightList);
+    	}
+
+    	public void setRightList(List<Integer> RightList) {
+        this.RightList = new ArrayList<>(RightList);
+    	}
+
+    	public List<Integer> getLeftList() {
+        return new ArrayList<>(LeftList);
+    	}
+
+    	public void setLeftList(List<Integer> LeftList) {
+        this.LeftList = new ArrayList<>(LeftList);
+    	}
 }
 	
