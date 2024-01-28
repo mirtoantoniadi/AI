@@ -10,44 +10,54 @@ public class State implements Comparable<State>
 
 	//constructor
     	public State(List<Integer> initialTimes) { //takes the times and puts them in RightList
-        this.RightList = new ArrayList<>(initialTimes);
-        this.LeftList = new ArrayList<>();
-        this.f = 0;
-        this.h = 0;
-        this.g = 0;
-        this.father = null;
-        this.totalTime = 0;
-	this.lampOnRight=true; //true on right and false on left
-	this.initialTimes=initialTimes;
+	        this.RightList = new ArrayList<>(initialTimes);
+	        this.LeftList = new ArrayList<>();
+	        this.f = 0;
+	        this.h = 0;
+	        this.g = 0;
+	        this.father = null;
+	        this.totalTime = 0;
+		this.lampOnRight=true; //true on right and false on left
+		this.initialTimes=initialTimes;
 	}
 
 	//copy constructor
 	public State(State s) {
-	this.RightList = new ArrayList<>(s.RightList);
-	this.LeftList = new ArrayList<>(s.LeftList);
-	this.f = s.f;
-	this.h = s.h;
-	this.g = s.g;
-	this.father = s.father; 
-	this.totalTime = s.totalTime;
-	this.lampOnRight = s.lampOnRight;
-	this.initialTimes=s.initialTimes;
+		this.RightList = new ArrayList<>(s.RightList);
+		this.LeftList = new ArrayList<>(s.LeftList);
+		this.f = s.f;
+		this.h = s.h;
+		this.g = s.g;
+		this.father = s.father; 
+		this.totalTime = s.totalTime;
+		this.lampOnRight = s.lampOnRight;
+		this.initialTimes=s.initialTimes;
 	}
 
 	public List<Integer> getRightList() {
-        return new ArrayList<>(RightList);
+	        return new ArrayList<>(RightList);
     	}
 
     	public void setRightList(List<Integer> RightList) {
-        this.RightList = new ArrayList<>(RightList);
+        	this.RightList = new ArrayList<>(RightList);
     	}
 
     	public List<Integer> getLeftList() {
-        return new ArrayList<>(LeftList);
+        	return new ArrayList<>(LeftList);
     	}
 
     	public void setLeftList(List<Integer> LeftList) {
-        this.LeftList = new ArrayList<>(LeftList);
+        	this.LeftList = new ArrayList<>(LeftList);
     	}
+
+	public int MaxH() { //heuristic finds the max of the right list
+		int maxTime = Integer.MIN_VALUE; //minimum possible value for type int
+		for (int time : RightList) {
+		if (time > maxTime) {
+			maxTime = time;
+			}
+		}
+		return maxTime;
+	}
 }
 	
