@@ -59,5 +59,56 @@ public class State implements Comparable<State>
 		}
 		return maxTime;
 	}
+
+
+	public int getF() 
+	{
+		return this.f;
+	}
+	
+	public int getG() 
+	{
+		return this.g;
+	}
+	
+	public int getH() 
+	{
+		return this.h;
+	}
+	
+	public State getFather()
+	{
+		return this.father;
+	}
+	
+	public void setF(int f)
+	{
+		this.f = f;
+	}
+	
+	public void setG(int g)
+	{
+		this.g = g;
+	}
+	
+	public void setH(int h)
+	{
+		this.h = h;
+	}
+	
+	public void setFather(State f)
+	{
+		this.father = f;
+	}
+	
+	public int getTotalTime() 
+	{
+		return this.totalTime;
+	}
+	
+	public void setTotalTime(int time)
+	{
+		this.totalTime = time;
+	}
 }
 	
