@@ -152,6 +152,67 @@ public class State implements Comparable<State>
 		//output the complete status of the crossing.
 		System.out.println(output);
 	}
+
+
+	public ArrayList<State> getChildren() {
+		ArrayList<State> children = new ArrayList<>();
+	    
+	    	if (lampOnRight) {
+	        	for (int i = 0; i < RightList.size(); i++) {
+				for (int j = i + 1; j < RightList.size(); j++) {
+		                	List<Integer> newRightList = new ArrayList<>(RightList);
+		                	List<Integer> newLeftList = new ArrayList<>(LeftList);
+							
+		
+		                	Integer item1 = newRightList.get(i);
+		                	Integer item2 = newRightList.get(j);
+		
+		                	newLeftList.add(item1);
+		                	newLeftList.add(item2);
+		
+		                	if (j > i) { //should remove the bigger number
+			                    	newRightList.remove(j);
+			                    	newRightList.remove(i);
+		             		} else {
+			                    	newRightList.remove(i);
+			                    	newRightList.remove(j);
+					}
+	                
+	                	
+					State child = new State(this);
+					child.setRightList(newRightList); 
+					child.setLeftList(newLeftList);  
+					child.setG(child.getG() + Math.max(item1, item2)); 
+					totalTime+=Math.max(item1, item2);
+					child.lampOnRight = !this.lampOnRight;
+					children.add(child);
+	                	
+	            		}
+	        	}
+	    	} else {
+	        	for (int i = 0; i < LeftList.size(); i++) {
+	         		List<Integer> newRightList = new ArrayList<>(RightList);
+	            		List<Integer> newLeftList = new ArrayList<>(LeftList);
+					
+	
+	            		Integer item = newLeftList.get(i);
+	            		newRightList.add(item);
+	            		newLeftList.remove(i);
+	
+				State child = new State(this);
+				child.setRightList(newRightList);
+				child.setLeftList(newLeftList);   
+				child.setG(child.getG() + item); 
+				totalTime+=item;
+				child.lampOnRight = !this.lampOnRight;
+	            		children.add(child);
+	        	}
+	    	}
+	
+	    	return children;
+		
+       
+	}
 	
 
 
