@@ -215,8 +215,26 @@ public class State implements Comparable<State>
 		public boolean isFinal() {
 			return RightList.isEmpty() && lampOnRight==false; //if all the persons and the lamp are on the left side
 		} 
+
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj){ 
+				return true;
+			} 
+			if (obj == null || getClass() != obj.getClass()) {  
+				return false;
+			}
+			State state = (State) obj; 
+			return lampOnRight == state.lampOnRight && Objects.equals(LeftList, state.LeftList) && Objects.equals(RightList, state.RightList);
+		}
+	
+		@Override
+		public int hashCode() {
+			return Objects.hash(lampOnRight, LeftList, RightList);
+		}
        
-	}
+	
 	
 
 
