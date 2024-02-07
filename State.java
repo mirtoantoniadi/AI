@@ -210,7 +210,11 @@ public class State implements Comparable<State>
 	    	}
 	
 	    	return children;
-		
+
+
+		public boolean isFinal() {
+			return RightList.isEmpty() && lampOnRight==false; //if all the persons and the lamp are on the left side
+		} 
        
 	}
 	
