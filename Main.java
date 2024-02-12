@@ -20,5 +20,15 @@ public class Main {
             return;
         }
 
+        List<Integer> initialTimes = new ArrayList<>(); //create the list and add the times from args[]
+        for(int i = 1; i < args.length; i++) {
+            try {
+                initialTimes.add(Integer.parseInt(args[i]));
+            } catch(NumberFormatException e) {
+                System.out.println("The definition: " + args[i] + " is not a valid number.");
+                return;
+            }
+        }
+
        
 }
