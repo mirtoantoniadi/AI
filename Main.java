@@ -15,5 +15,10 @@ public class Main {
             return;
         }
 
+        if(args.length - 1 != size) { //match times and sizes
+            System.out.println("The stated size of the list does not match the times given. Execution terminated.");
+            return;
+        }
+
        
 }
