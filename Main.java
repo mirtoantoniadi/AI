@@ -43,5 +43,67 @@ public class Main {
         OpenList.add(FirstState);
         int sum = initialTimes.stream().mapToInt(Integer::intValue).sum();
 
+        while(!OpenList.isEmpty()){ //while the open list isn t empty continue(still have a state to explore)
+
+            State Curr=null;
+
+            
+            for (State state : OpenList) {                         //returns a negative integer, zero, or a positive integer 
+                                                                   //as this object is less than, equal to, or greater than the specified object
+                if (Curr == null || state.compareTo(Curr) < 0) {
+                Curr = state; //find the state with the lower cost(f)
+                }
+            }
+
+            
+            
+            OpenList.remove(Curr); //remove it
+            
+
+            if(Curr.getG() > sum) { 
+                System.out.println("Total time exceeded "+ sum +" The execution is terminated.");
+                return;
+            }
+
+            if(Curr.isFinal()) { //If its the final state break 
+                EndState = Curr;
+                break;
+            }
+
+            
+            for(State child : Curr.getChildren()) { //find all the childrens
+                
+                //we have to check if we have already explore this state 
+                if(!ClosedList.contains(child) && !OpenList.contains(child)) {
+                    
+                    child.setFather(Curr);
+                    child.evaluate();
+                    
+                    OpenList.add(child);
+                }
+            }
+            ClosedList.add(Curr);
+
+        }
+        if (EndState != null) {
+            
+            LinkedList<State> path = new LinkedList<>();
+            State current = EndState;
+        
+            // construct the path from end to start 
+            while (current != null) {
+                path.addFirst(current);
+                current = current.getFather();
+            }
+        
+            // iterate through the LinkedList and print each state
+            path.forEach(State::print);
+        }else{
+            System.out.println("Didn t find a solution");
+        }
+        
+
+    }
+
        
 }
