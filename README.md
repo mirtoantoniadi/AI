@@ -1,0 +1,1 @@
+The above code implements the solution to the well-known "Bridge Crossing" problem. It uses the A* algorithm with the heuristic being the maximum time present on the right side of the node. It finds the best solution, meaning to get all the people across with the best time.
