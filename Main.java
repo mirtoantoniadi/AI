@@ -28,11 +28,10 @@ public class Main {
                 System.out.println("The definition: " + args[i] + " is not a valid number.");
                 return;
             }
+        
         }
-
         //we create the first state
         State FirstState=new State(initialTimes);
-        
         //definition of the end state
         State EndState=null;
 
@@ -43,6 +42,7 @@ public class Main {
         OpenList.add(FirstState);
         int sum = initialTimes.stream().mapToInt(Integer::intValue).sum();
 
+
         while(!OpenList.isEmpty()){ //while the open list isn t empty continue(still have a state to explore)
 
             State Curr=null;
@@ -51,7 +51,7 @@ public class Main {
             for (State state : OpenList) {                         //returns a negative integer, zero, or a positive integer 
                                                                    //as this object is less than, equal to, or greater than the specified object
                 if (Curr == null || state.compareTo(Curr) < 0) {
-                Curr = state; //find the state with the lower cost(f)
+                    Curr = state; //find the state with the lower cost(f)
                 }
             }
 
@@ -61,7 +61,7 @@ public class Main {
             
 
             if(Curr.getG() > sum) { 
-                System.out.println("Total time exceeded "+ sum +" The execution is terminated.");
+                System.out.println("Total time exceeded 30. Terminating.");
                 return;
             }
 
@@ -101,9 +101,6 @@ public class Main {
         }else{
             System.out.println("Didn t find a solution");
         }
-        
-
     }
-
-       
+}
 }
