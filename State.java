@@ -1,3 +1,5 @@
+import java.util.*; 
+
 public class State implements Comparable<State>
 {
 	private int f, h, g;
@@ -5,21 +7,25 @@ public class State implements Comparable<State>
 	private int totalTime;
 	private List<Integer> RightList; 
 	private List<Integer> LeftList; 
-  	private boolean lampOnRight; 
+    	private boolean lampOnRight; 
 	List<Integer> initialTimes;
-
+	
+	
+    
+	
 	//constructor
     	public State(List<Integer> initialTimes) { //takes the times and puts them in RightList
-	        this.RightList = new ArrayList<>(initialTimes);
-	        this.LeftList = new ArrayList<>();
-	        this.f = 0;
-	        this.h = 0;
-	        this.g = 0;
-	        this.father = null;
-	        this.totalTime = 0;
+        	this.RightList = new ArrayList<>(initialTimes);
+        	this.LeftList = new ArrayList<>();
+        	this.f = 0;
+        	this.h = 0;
+        	this.g = 0;
+        	this.father = null;
+        	this.totalTime = 0;
 		this.lampOnRight=true; //true on right and false on left
 		this.initialTimes=initialTimes;
-	}
+
+    }
 
 	//copy constructor
 	public State(State s) {
@@ -34,9 +40,10 @@ public class State implements Comparable<State>
 		this.initialTimes=s.initialTimes;
 	}
 
+
 	public List<Integer> getRightList() {
-	        return new ArrayList<>(RightList);
-    	}
+        	return new ArrayList<>(RightList);
+    	}	
 
     	public void setRightList(List<Integer> RightList) {
         	this.RightList = new ArrayList<>(RightList);
@@ -49,18 +56,16 @@ public class State implements Comparable<State>
     	public void setLeftList(List<Integer> LeftList) {
         	this.LeftList = new ArrayList<>(LeftList);
     	}
-
+	
 	public int MaxH() { //heuristic finds the max of the right list
 		int maxTime = Integer.MIN_VALUE; //minimum possible value for type int
 		for (int time : RightList) {
-		if (time > maxTime) {
-			maxTime = time;
+			if (time > maxTime) {
+				maxTime = time;
 			}
 		}
 		return maxTime;
 	}
-
-
 	public int getF() 
 	{
 		return this.f;
@@ -110,14 +115,13 @@ public class State implements Comparable<State>
 	{
 		this.totalTime = time;
 	}
-
-	public void evaluate() 
+	
+	public void evaluate() //calculate f
 	{
 		this.h=MaxH(); 
 		this.f=this.h+this.g;
 	}
-
-
+	
 	public void print() {
 		StringBuilder output = new StringBuilder();
 	
@@ -131,7 +135,7 @@ public class State implements Comparable<State>
 			leftStrBuilder.delete(leftStrBuilder.length() - 2, leftStrBuilder.length());
 			output.append(leftStrBuilder).append(" ");
 		}
-	
+
 		//construct the string for the right side if it is not empty
 		if (!RightList.isEmpty()) {
 			StringBuilder rightStrBuilder = new StringBuilder("Right side: ");
@@ -153,71 +157,71 @@ public class State implements Comparable<State>
 		System.out.println(output);
 	}
 
-
+	
 	public ArrayList<State> getChildren() {
-		ArrayList<State> children = new ArrayList<>();
-	    
-	    	if (lampOnRight) {
-	        	for (int i = 0; i < RightList.size(); i++) {
-				for (int j = i + 1; j < RightList.size(); j++) {
-		                	List<Integer> newRightList = new ArrayList<>(RightList);
-		                	List<Integer> newLeftList = new ArrayList<>(LeftList);
-							
-		
-		                	Integer item1 = newRightList.get(i);
-		                	Integer item2 = newRightList.get(j);
-		
-		                	newLeftList.add(item1);
-		                	newLeftList.add(item2);
-		
-		                	if (j > i) { //should remove the bigger number
-			                    	newRightList.remove(j);
-			                    	newRightList.remove(i);
-		             		} else {
-			                    	newRightList.remove(i);
-			                    	newRightList.remove(j);
-					}
-	                
-	                	
-					State child = new State(this);
-					child.setRightList(newRightList); 
-					child.setLeftList(newLeftList);  
-					child.setG(child.getG() + Math.max(item1, item2)); 
-					totalTime+=Math.max(item1, item2);
-					child.lampOnRight = !this.lampOnRight;
-					children.add(child);
-	                	
-	            		}
-	        	}
-	    	} else {
-	        	for (int i = 0; i < LeftList.size(); i++) {
-	         		List<Integer> newRightList = new ArrayList<>(RightList);
-	            		List<Integer> newLeftList = new ArrayList<>(LeftList);
+    		ArrayList<State> children = new ArrayList<>();
+    
+    		if (lampOnRight) {
+        		for (int i = 0; i < RightList.size(); i++) {
+            			for (int j = i + 1; j < RightList.size(); j++) {
+                		List<Integer> newRightList = new ArrayList<>(RightList);
+                		List<Integer> newLeftList = new ArrayList<>(LeftList);
 					
-	
-	            		Integer item = newLeftList.get(i);
-	            		newRightList.add(item);
-	            		newLeftList.remove(i);
-	
+
+                		Integer item1 = newRightList.get(i);
+                		Integer item2 = newRightList.get(j);
+
+                		newLeftList.add(item1);
+                		newLeftList.add(item2);
+
+                		if (j > i) { //should remove the bigger number
+                    		newRightList.remove(j);
+                    		newRightList.remove(i);
+             			} else {
+                    		newRightList.remove(i);
+                    		newRightList.remove(j);
+                		}
+                
+                	
+				State child = new State(this);
+				child.setRightList(newRightList); 
+				child.setLeftList(newLeftList);   
+				child.setG(child.getG() + Math.max(item1, item2)); 
+				totalTime+=Math.max(item1, item2);
+				child.lampOnRight = !this.lampOnRight;
+				children.add(child);
+                	
+            		}
+        		}
+    		} else {
+        		for (int i = 0; i < LeftList.size(); i++) {
+         			List<Integer> newRightList = new ArrayList<>(RightList);
+            			List<Integer> newLeftList = new ArrayList<>(LeftList);
+				
+
+            			Integer item = newLeftList.get(i);
+            			newRightList.add(item);
+            			newLeftList.remove(i);
+
 				State child = new State(this);
 				child.setRightList(newRightList);
 				child.setLeftList(newLeftList);   
 				child.setG(child.getG() + item); 
 				totalTime+=item;
 				child.lampOnRight = !this.lampOnRight;
-	            		children.add(child);
-	        	}
-	    	}
+            			children.add(child);
+        		}
+    		}
+
+    		return children;
+		
+       
+	}	
 	
-	    	return children;
-	}
-
-
 	public boolean isFinal() {
 		return RightList.isEmpty() && lampOnRight==false; //if all the persons and the lamp are on the left side
 	} 
-
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj){ 
@@ -227,21 +231,19 @@ public class State implements Comparable<State>
 			return false;
 		}
 		State state = (State) obj; 
-		return lampOnRight == state.lampOnRight && Objects.equals(LeftList, state.LeftList) && Objects.equals(RightList, state.RightList);
-	}
+		return lampOnRight == state.lampOnRight && 
+				Objects.equals(LeftList, state.LeftList) &&
+				Objects.equals(RightList, state.RightList);
+		}
 	
 	@Override
-	public int hashCode() {
+    	public int hashCode() {
 		return Objects.hash(lampOnRight, LeftList, RightList);
 	}
-       
-
+	
 	@Override
-    	public int compareTo(State s){
-        	return Double.compare(this.f, s.getF()); // compare based on the heuristic score.
-    	}
-	
-
-
+    public int compareTo(State s)
+    {
+        return Double.compare(this.f, s.getF()); // compare based on the heuristic score.
+    }
 }
-	
